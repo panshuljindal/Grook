@@ -1,93 +1,114 @@
 package com.panshul.grook.Model;
 
+import java.util.List;
+
 public class GroundModel {
-        String gaddress, gcity, gid, gname, gloc, glocality, gphone, gpic, grating;
 
-        public GroundModel() {
 
-        }
+    String gaddress;
+    String gbookingfees;
+    String gcity;
+    String gclosed;
+    String gid;
+    String glocality;
+    String gname;
+    String gpic;
+    String gtiming;
+    String gsport;
+    public GroundModel() {
 
-        public GroundModel(String gaddress, String gcity, String gid, String gname, String gloc, String glocality, String gphone, String gpic, String grating) {
-            this.gaddress = gaddress;
-            this.gcity = gcity;
-            this.gid = gid;
-            this.gname = gname;
-            this.gloc = gloc;
-            this.glocality = glocality;
-            this.gphone = gphone;
-            this.gpic = gpic;
-            this.grating = grating;
-        }
+    }
 
-        public String getGaddress() {
-            return gaddress;
-        }
+    public GroundModel(String gid, String gaddress, String gbookingfees, String gcity, String gclosed, String glocality, String gname, String gpic, String gtiming, String gsport) {
+        this.gid = gid;
+        this.gaddress = gaddress;
+        this.gbookingfees = gbookingfees;
+        this.gcity = gcity;
+        this.gclosed = gclosed;
+        this.glocality = glocality;
+        this.gname = gname;
+        this.gpic = gpic;
+        this.gtiming = gtiming;
+        this.gsport = gsport;
+    }
 
-        public void setGaddress(String gaddress) {
-            this.gaddress = gaddress;
-        }
+    public String getGid() {
+        return gid;
+    }
 
-        public String getGcity() {
-            return gcity;
-        }
+    public void setGid(String gid) {
+        this.gid = gid;
+    }
 
-        public void setGcity(String gcity) {
-            this.gcity = gcity;
-        }
+    public String getGaddress() {
+        return gaddress;
+    }
 
-        public String getGid() {
-            return gid;
-        }
+    public void setGaddress(String gaddress) {
+        this.gaddress = gaddress;
+    }
 
-        public void setGid(String gid) {
-            this.gid = gid;
-        }
+    public String getGbookingfees() {
+        return gbookingfees;
+    }
 
-        public String getGname() {
-            return gname;
-        }
+    public void setGbookingfees(String gbookingfees) {
+        this.gbookingfees = gbookingfees;
+    }
 
-        public void setGname(String gname) {
-            this.gname = gname;
-        }
+    public String getGcity() {
+        return gcity;
+    }
 
-        public String getGloc() {
-            return gloc;
-        }
+    public void setGcity(String gcity) {
+        this.gcity = gcity;
+    }
 
-        public void setGloc(String gloc) {
-            this.gloc = gloc;
-        }
+    public String getGclosed() {
+        return gclosed;
+    }
 
-        public String getGlocality() {
-            return glocality;
-        }
+    public void setGclosed(String gclosed) {
+        this.gclosed = gclosed;
+    }
 
-        public void setGlocality(String glocality) {
-            this.glocality = glocality;
-        }
+    public String getGlocality() {
+        return glocality;
+    }
 
-        public String getGphone() {
-            return gphone;
-        }
+    public void setGlocality(String glocality) {
+        this.glocality = glocality;
+    }
 
-        public void setGphone(String gphone) {
-            this.gphone = gphone;
-        }
+    public String getGname() {
+        return gname;
+    }
 
-        public String getGpic() {
-            return gpic;
-        }
+    public void setGname(String gname) {
+        this.gname = gname;
+    }
 
-        public void setGpic(String gpic) {
-            this.gpic = gpic;
-        }
+    public String getGpic() {
+        return gpic;
+    }
 
-        public String getGrating() {
-            return grating;
-        }
+    public void setGpic(String gpic) {
+        this.gpic = gpic;
+    }
 
-        public void setGrating(String grating) {
-            this.grating = grating;
-        }
+    public String getGtiming() {
+        return gtiming;
+    }
+
+    public void setGtiming(String gtiming) {
+        this.gtiming = gtiming;
+    }
+
+    public String getGsport() {
+        return gsport;
+    }
+
+    public void setGsport(String gsport) {
+        this.gsport = gsport;
+    }
 }

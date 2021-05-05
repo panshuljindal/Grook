@@ -1,110 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/itemCardView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/groundLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#131313"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/ground_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/viewPaperLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/edittext_background"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="15dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout2"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:background="@drawable/image_background"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/gimage"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:background="@drawable/image_background"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/gname"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/inter_medium"
-                android:paddingVertical="1dp"
-                android:text="Khushee Stadium"
-                android:textAlignment="viewStart"
-                android:textColor="@color/white"
-                android:textSize="12dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-                app:layout_constraintWidth_percent="0.65" />
-
-            <TextView
-                android:id="@+id/gaddress"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:fontFamily="@font/inter_medium"
-                android:paddingVertical="1dp"
-                android:text="Bagh, Madhya Pradesh"
-                android:textAlignment="viewStart"
-                android:textColor="@color/white"
-                android:textSize="12dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/gname"
-                app:layout_constraintWidth_percent="0.65" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginStart="35dp"
-                android:layout_marginLeft="35dp"
-                android:layout_marginTop="27dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
-                app:layout_constraintEnd_toStartOf="@+id/grating"
-                app:layout_constraintStart_toEndOf="@+id/gname"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-                app:srcCompat="@drawable/ic_star" />
-
-            <TextView
-                android:id="@+id/grating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="36dp"
-                android:layout_marginRight="36dp"
-                android:fontFamily="@font/inter_medium"
-                android:paddingVertical="1dp"
-                android:text="4.2"
-                android:textAlignment="viewStart"
-                android:textColor="@color/white"
-                android:textSize="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-                app:layout_constraintWidth_percent="0.65" />
+            android:id="@+id/cl"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/grey_ground_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/groundImage">
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+        <ImageView
+            android:id="@+id/groundImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ground_background"
+            app:layout_constraintBottom_toTopOf="@+id/cl"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/groundtest" />
+
+        <TextView
+            android:id="@+id/groundName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/lexend_medium"
+            android:text="Deezer Sports Complex"
+            android:textColor="@color/groundHeading"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cl" />
+
+        <TextView
+            android:id="@+id/groundAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/lexend_regular"
+            android:text="Sector-12, Noida, UP"
+            android:textColor="@color/groundHeading"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/groundName" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/groundAddress"
+            app:srcCompat="@drawable/ic_sport" />
+
+        <TextView
+            android:id="@+id/groundSport"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
+            android:fontFamily="@font/lexend_medium"
+            android:text="Cricket, Tennis, Football"
+            android:textColor="@color/groundGrey"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toStartOf="@+id/imageView4"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toBottomOf="@+id/groundAddress" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/groundTiming"
+            app:layout_constraintTop_toBottomOf="@+id/groundAddress"
+            app:srcCompat="@drawable/ic_timer" />
+
+        <TextView
+            android:id="@+id/groundTiming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginRight="18dp"
+            android:fontFamily="@font/lexend_medium"
+            android:text="0500 to 2100 hr"
+            android:textColor="@color/groundGrey"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/groundAddress" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/groundSport"
+            app:srcCompat="@drawable/ic_closed" />
+
+        <TextView
+            android:id="@+id/groundClosed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginRight="18dp"
+            android:fontFamily="@font/lexend_medium"
+            android:text="Closed Friday"
+            android:textColor="@color/groundRed"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView6"
+            app:layout_constraintTop_toBottomOf="@+id/groundSport" />
+
+        <Button
+            android:id="@+id/homeBook"
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/green_button_background"
+            android:fontFamily="@font/lexend_medium"
+            android:text="@string/groundBook"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/groundClosed" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

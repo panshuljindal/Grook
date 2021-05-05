@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,13 +34,17 @@ public class GroundAdapter extends RecyclerView.Adapter<GroundAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
-        TextView rating,address,name;
+        TextView name,address,sport,timing,closed;
+        Button book;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.gimage);
-            rating = itemView.findViewById(R.id.grating);
-            address = itemView.findViewById(R.id.gaddress);
-            name = itemView.findViewById(R.id.gname);
+            image = itemView.findViewById(R.id.groundImage);
+            name = itemView.findViewById(R.id.groundName);
+            address = itemView.findViewById(R.id.groundAddress);
+            sport = itemView.findViewById(R.id.groundSport);
+            closed = itemView.findViewById(R.id.groundClosed);
+            timing = itemView.findViewById(R.id.groundTiming);
+            book = itemView.findViewById(R.id.homeBook);
         }
     }
     @NonNull
@@ -53,27 +58,14 @@ public class GroundAdapter extends RecyclerView.Adapter<GroundAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         GroundModel model = list.get(position);
+        holder.image.setClipToOutline(true);
         holder.name.setText(model.getGname());
-        holder.rating.setText(model.getGrating());
         holder.address.setText(model.getGaddress());
+        holder.sport.setText(model.getGsport());
+        holder.timing.setText(model.getGtiming());
+        holder.closed.setText(model.getGclosed());
         Glide.with(context).load(model.getGpic()).into(holder.image);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences pref = context.getSharedPreferences("com.panshul.matchup.ground",Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
-                Gson gson = new Gson();
-                String json = gson.toJson(model);
-                editor.putString("groundInfo",json);
-                editor.apply();
-                GroundFragment fragment = new GroundFragment();
-                FragmentManager manager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.frameLayout, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
+
     }
 
     @Override

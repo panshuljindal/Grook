@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,8 +26,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUp extends AppCompatActivity {
-    EditText entpass,entphone,entname,entemail,cityEditText;
+    EditText entpass,entphone,entname,entemail;
+    AutoCompleteTextView cityEditText;
     FirebaseAuth mauth;
+    String[] cities = {"Delhi","Mumbai","Kolkata"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,11 @@ public class SignUp extends AppCompatActivity {
         cityEditText = findViewById(R.id.cityEditText);
 
         mauth = FirebaseAuth.getInstance();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,cities);
+        cityEditText.setThreshold(1);
+        cityEditText.setAdapter(adapter);
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myref = database.getReference("User");
@@ -93,7 +102,20 @@ public class SignUp extends AppCompatActivity {
         });
     }
     public boolean checkCity(){
-        return true;
+
+        if (cityEditText.getText().toString().equals("Delhi")){
+            return true;
+        }
+
+        else if (cityEditText.getText().toString().equals("Mumbai")){
+            return true;
+        }
+
+        else if (cityEditText.getText().toString().equals("Kolkata")){
+            return true;
+        }
+        Toast.makeText(this, "Please enter correct city", Toast.LENGTH_SHORT).show();
+        return false;
     }
     public boolean checkemail(){
         String tempemail=entemail.getText().toString().trim();

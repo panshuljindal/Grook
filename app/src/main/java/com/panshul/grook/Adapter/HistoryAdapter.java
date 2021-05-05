@@ -60,7 +60,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             sport = itemView.findViewById(R.id.hsport);
             timeslot = itemView.findViewById(R.id.htimeSlot);
             rating = itemView.findViewById(R.id.hrating);
-            image = itemView.findViewById(R.id.himage);
+           // image = itemView.findViewById(R.id.himage);
         }
     }
 }

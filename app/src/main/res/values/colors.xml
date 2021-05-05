@@ -12,4 +12,13 @@
     <color name="green">#1AC94B</color>
 
     <color name="fragment_background">#ffffff</color>
+
+    //Home
+    <color name="subHeading">#767676</color>
+    <color name="groundHeading">#050505</color>
+    <color name="groundAddress">#505050</color>
+    <color name="groundGrey">#9b9b9b</color>
+    <color name="groundRed">#FF5353</color>
+    <color name="groundBack">#F6F6F6</color>
+    <color name="searchBack">#bcbcbc</color>
 </resources>
