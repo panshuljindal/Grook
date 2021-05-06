@@ -24,4 +24,11 @@
     <string name="homeSubHead">Sports grounds and facilities near you</string>
     <string name="groundBook">Book</string>
     <string name="groundSearch">Search for grounds</string>
+    
+    //Ground
+    <string name="whenGoing">When are you going?*</string>
+    <string name="whatPlaying">What are you playing?*</string>
+    <string name="bookingOnly">*Bookings can only be made a week before</string>
+    <string name="whichTime">Which time slot do you prefer?</string>
+    <string name="subtotal">SUBTOTAL</string>
 </resources>

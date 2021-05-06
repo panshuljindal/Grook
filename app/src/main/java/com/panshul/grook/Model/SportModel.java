@@ -4,14 +4,16 @@ public class SportModel {
     String sid;
     String sname;
     String sprice;
+    String isPresent;
     public SportModel(){
 
     }
 
-    public SportModel(String sid, String sname, String sprice) {
+    public SportModel(String sid, String sname, String sprice, String isPresent) {
         this.sid = sid;
         this.sname = sname;
         this.sprice = sprice;
+        this.isPresent = isPresent;
     }
 
     public String getSid() {
@@ -36,5 +38,13 @@ public class SportModel {
 
     public void setSprice(String sprice) {
         this.sprice = sprice;
+    }
+
+    public String getIsPresent() {
+        return isPresent;
+    }
+
+    public void setIsPresent(String isPresent) {
+        this.isPresent = isPresent;
     }
 }

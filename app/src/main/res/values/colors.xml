@@ -21,4 +21,7 @@
     <color name="groundRed">#FF5353</color>
     <color name="groundBack">#F6F6F6</color>
     <color name="searchBack">#bcbcbc</color>
+
+    //Slot
+    <color name="slotPresent">#D6D6D6</color>
 </resources>

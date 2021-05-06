@@ -1,7 +1,7 @@
 package com.panshul.grook.Adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.panshul.grook.Fragments.GroundFragment;
+import com.panshul.grook.Activity.GroundActivity;
 import com.panshul.grook.Model.GroundModel;
 import com.panshul.grook.R;
 
@@ -65,6 +62,17 @@ public class GroundAdapter extends RecyclerView.Adapter<GroundAdapter.MyViewHold
         holder.timing.setText(model.getGtiming());
         holder.closed.setText(model.getGclosed());
         Glide.with(context).load(model.getGpic()).into(holder.image);
+
+        holder.book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+                String json = gson.toJson(list.get(position));
+                Intent i = new Intent(v.getContext(), GroundActivity.class);
+                i.putExtra("ground",json);
+                context.startActivity(i);
+            }
+        });
 
     }
 
