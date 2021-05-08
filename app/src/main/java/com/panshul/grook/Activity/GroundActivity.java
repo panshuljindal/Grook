@@ -14,7 +14,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,7 +42,8 @@ import java.util.UUID;
 public class GroundActivity extends AppCompatActivity {
 
     Button cancel,next;
-    TextView name,address,sport,timing,rs;
+    public static TextView rs;
+    TextView name,address,sport,timing;
     RecyclerView dateR,sportR,slotR;
     ImageView image;
     DatabaseReference myref;
@@ -72,13 +75,38 @@ public class GroundActivity extends AppCompatActivity {
         timing.setText(ground.getGtiming());
         rs.setText("-");
         booking  = new BookingModel(UUID.randomUUID().toString(),ground.getGid(),"null","null","null","null");
-        saveData();
+        Glide.with(this).load(ground.getGpic()).into(image);
+        image.setClipToOutline(true);
+        //saveData();
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Gson gson = new Gson();
                 String json = gson.toJson(booking);
-                Log.i("booking",json);
+                if (booking.getDate().equals("null")){
+                    Toast.makeText(GroundActivity.this, "Please select a Date.", Toast.LENGTH_SHORT).show();
+                }
+                else if (booking.getSport().equals("null")){
+                    Toast.makeText(GroundActivity.this, "Please select a Sport.", Toast.LENGTH_SHORT).show();
+                }
+                else if (booking.getSlot().equals("null")){
+                    Toast.makeText(GroundActivity.this, "Please select a Slot.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent i = new Intent(GroundActivity.this,FinalCheckout.class);
+                    Gson gson1 = new Gson();
+                    String json1 = gson1.toJson(ground);
+                    String json2 = gson1.toJson(booking);
+                    i.putExtra("ground",json1);
+                    i.putExtra("booking",json2);
+                    startActivity(i);
+                }
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

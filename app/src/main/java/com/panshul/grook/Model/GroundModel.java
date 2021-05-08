@@ -13,13 +13,14 @@ public class GroundModel {
     String glocality;
     String gname;
     String gpic;
+    String gpic2;
     String gtiming;
     String gsport;
     public GroundModel() {
 
     }
 
-    public GroundModel(String gid, String gaddress, String gbookingfees, String gcity, String gclosed, String glocality, String gname, String gpic, String gtiming, String gsport) {
+    public GroundModel(String gid, String gpic2,String gaddress, String gbookingfees, String gcity, String gclosed, String glocality, String gname, String gpic, String gtiming, String gsport) {
         this.gid = gid;
         this.gaddress = gaddress;
         this.gbookingfees = gbookingfees;
@@ -28,8 +29,17 @@ public class GroundModel {
         this.glocality = glocality;
         this.gname = gname;
         this.gpic = gpic;
+        this.gpic2=gpic2;
         this.gtiming = gtiming;
         this.gsport = gsport;
+    }
+
+    public String getGpic2() {
+        return gpic2;
+    }
+
+    public void setGpic2(String gpic2) {
+        this.gpic2 = gpic2;
     }
 
     public String getGid() {

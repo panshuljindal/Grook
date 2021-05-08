@@ -87,7 +87,7 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.MyViewHolder> 
             @Override
             public void onClick(View v) {
                 row_number=position;
-                GroundActivity.booking.setDate(unixconvertFinal(list.get(position).getDate()));
+                GroundActivity.booking.setDate(list.get(position).getDate());
                 notifyDataSetChanged();
             }
         });

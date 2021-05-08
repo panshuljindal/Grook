@@ -74,7 +74,7 @@ public class SlotAdapter extends RecyclerView.Adapter<SlotAdapter.MyViewHolder> 
             @Override
             public void onClick(View v) {
                 row_number = position;
-                GroundActivity.booking.setSlot(holder.slot.getText().toString());
+                GroundActivity.booking.setSlot(list.get(position).getSlot());
                 notifyDataSetChanged();
             }
         });

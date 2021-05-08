@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                     setTitle("Home");
                     break;
                 case 1:
-                    selectedFragment = new ProfileFragment();
+                    selectedFragment = new HistoryFragment();
                     setTitle("History");
                     break;
                 case 2:
