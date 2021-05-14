@@ -15,11 +15,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/playlistcardView"
@@ -39,8 +41,8 @@
                         android:layout_height="32dp"
                         android:layout_marginStart="24dp"
                         android:layout_marginLeft="24dp"
-                        android:layout_marginTop="11dp"
-                        android:layout_marginBottom="11dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="13dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/textView"
                         app:layout_constraintStart_toStartOf="parent"
@@ -52,10 +54,10 @@
                         android:id="@+id/logout"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_marginTop="11dp"
+                        android:layout_marginTop="12dp"
                         android:layout_marginEnd="24dp"
                         android:layout_marginRight="24dp"
-                        android:layout_marginBottom="11dp"
+                        android:layout_marginBottom="12dp"
                         android:background="@drawable/cancel_red"
                         android:fontFamily="@font/lexend_medium"
                         android:paddingLeft="10dp"
@@ -105,7 +107,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/profileName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
@@ -157,7 +159,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/profileEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
@@ -211,7 +213,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/profilePhone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
@@ -265,7 +267,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/profileLocation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
@@ -303,7 +305,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/location" />
 
             <Button
-                android:id="@+id/editProfile2"
+                android:id="@+id/changePassword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"

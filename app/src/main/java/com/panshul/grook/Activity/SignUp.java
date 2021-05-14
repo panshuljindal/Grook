@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.panshul.grook.Model.UserModel;
 import com.panshul.grook.R;
 
 import java.util.regex.Matcher;
@@ -78,11 +79,8 @@ public class SignUp extends AppCompatActivity {
                                             String uid = user.getUid();
                                             btnsignup.setEnabled(true);
                                             //Log.i("uid", uid);
-                                            myref.child(uid).child("name").setValue(entname.getText().toString());
-                                            myref.child(uid).child("email").setValue(entemail.getText().toString());
-                                            // myref.child(uid).child("password").setValue(entpass.getText().toString());
-                                            myref.child(uid).child("phone").setValue(entphone.getText().toString());
-                                            myref.child(uid).child("city").setValue(cityEditText.getText().toString());
+                                            UserModel model = new UserModel(uid,cityEditText.getText().toString(),entphone.getText().toString(),entname.getText().toString(),entemail.getText().toString());
+                                            myref.child(uid).setValue(model);
                                             startActivity(new Intent(SignUp.this, Login.class));
                                         } catch (Exception e) {
                                             Toast.makeText(SignUp.this, "Error Occurred", Toast.LENGTH_SHORT).show();

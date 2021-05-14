@@ -87,7 +87,7 @@ public class Login extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 FirebaseUser user = mauth.getCurrentUser();
                 String uid = user.getUid();
-                SharedPreferences pref = getApplicationContext().getSharedPreferences("com.panshul.grook.userdata",MODE_PRIVATE);
+                SharedPreferences pref = getSharedPreferences("com.panshul.grook.userdata",MODE_PRIVATE);
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putString("uid",uid);
                 String name = snapshot.child(uid).child("name").getValue().toString();
