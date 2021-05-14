@@ -2,9 +2,12 @@ package com.panshul.grook.Fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +19,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +48,8 @@ public class HistoryHomeFragment extends Fragment {
     ArrayList<AllHistoryModel> list;
     TextView name,address,sport,timing,closed,bookedBy;
     RecyclerView recyclerView;
+    ConstraintLayout cl;
+    LottieAnimationView animation;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +66,26 @@ public class HistoryHomeFragment extends Fragment {
         list = new ArrayList<>();
         //Log.i("json",json);
         findViewByID();
+
+        cl.setVisibility(View.INVISIBLE);
+        animation.setVisibility(View.VISIBLE);
         Gson gson = new Gson();
         Type type = new TypeToken<UserHistoryModel>() {}.getType();
         user = gson.fromJson(json,type);
-        Glide.with(view.getContext()).load(user.getGpic2()).into(image);
+        Glide.with(view.getContext()).load(user.getGpic2()).listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                cl.setVisibility(View.VISIBLE);
+                animation.setVisibility(View.INVISIBLE);
+                animation.pauseAnimation();
+                return false;
+            }
+        }).into(image);
         name.setText(user.getGname());
         address.setText(user.getAddress());
         sport.setText(user.getGsport());
@@ -78,6 +104,8 @@ public class HistoryHomeFragment extends Fragment {
         closed = view.findViewById(R.id.hsclosed);
         bookedBy = view.findViewById(R.id.hsBookedBy);
         recyclerView = view.findViewById(R.id.historyHomeRecyclerView);
+        cl = view.findViewById(R.id.historyHomeCl);
+        animation = view.findViewById(R.id.historyHomeAnimationView);
     }
     public void addData(){
         DatabaseReference myref = FirebaseDatabase.getInstance().getReference("History").child("Ground").child(user.getGid());

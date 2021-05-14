@@ -7,6 +7,24 @@
     tools:context=".Fragments.HistoryHomeFragment"
     android:background="@color/white">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/historyHomeAnimationView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginBottom="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/lottie" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/playlistcardView"
         android:layout_width="match_parent"
@@ -63,6 +81,7 @@
         app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/historyHomeCl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

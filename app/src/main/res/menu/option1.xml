@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/filterName"
+        android:title="Ground Name"
+        />
+    <item
+        android:id="@+id/filterLocality"
+        android:title="Ground Locality"
+        />
+    <item
+        android:id="@+id/filterAddress"
+        android:title="Ground Address"
+        />
+</menu>

@@ -23,7 +23,7 @@
     <string name="homeHeading">Near You</string>
     <string name="homeSubHead">Sports grounds and facilities near you</string>
     <string name="groundBook">Book</string>
-    <string name="groundSearch">Search for grounds</string>
+    <string name="groundSearch">Search by Ground Name</string>
 
     //Ground
     <string name="whenGoing">When are you going?*</string>

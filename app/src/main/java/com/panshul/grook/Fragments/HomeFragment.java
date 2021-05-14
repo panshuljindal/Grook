@@ -9,11 +9,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.database.DataSnapshot;
@@ -35,11 +41,13 @@ public class HomeFragment extends Fragment {
 
     View view;
     RecyclerView homeRecyclerView;
-    List<GroundModel> list1;
+    List<GroundModel> list1,searchList;
     ImageView searchImageView,refresh,cancel;
     ConstraintLayout searchCl,homeCl;
     LottieAnimationView animationView;
-
+    EditText search;
+    int filterOption;
+    Button option;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +59,7 @@ public class HomeFragment extends Fragment {
 
         view= inflater.inflate(R.layout.fragment_home, container, false);
         list1 = new ArrayList<>();
+        filterOption=0;
         homeRecyclerView= view.findViewById(R.id.homeRecyclerView);
         searchImageView  = view.findViewById(R.id.homeSearch);
         refresh = view.findViewById(R.id.homeRefresh);
@@ -60,6 +69,8 @@ public class HomeFragment extends Fragment {
         homeCl = view.findViewById(R.id.homeCL);
         animationView.setVisibility(View.VISIBLE);
         homeCl.setVisibility(View.INVISIBLE);
+        search = view.findViewById(R.id.searchEditText);
+        option = view.findViewById(R.id.filterOption);
         onClick();
         addData();
         loadData();
@@ -67,6 +78,36 @@ public class HomeFragment extends Fragment {
         return view;
     }
     void onClick(){
+        option.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(view.getContext(), option);
+                popupMenu.getMenuInflater().inflate(R.menu.option1,popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if(item.toString().equals("Ground Name")){
+                            filterOption=0;
+                            search.setHint("Search by Ground Name");
+                        }
+                        else if(item.toString().equals("Ground Locality")){
+                            filterOption=1;
+                            search.setHint("Search by Ground Locality");
+                        }
+                        else if (item.toString().equals("Ground Address")){
+                            filterOption=2;
+                            search.setHint("Search by Ground Address");
+                        }
+                        else {
+                            filterOption=0;
+                            search.setHint("Search by Ground Name");
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
         searchImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +129,52 @@ public class HomeFragment extends Fragment {
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                animationView.setVisibility(View.VISIBLE);
+                homeCl.setVisibility(View.INVISIBLE);
                 addData();
+            }
+        });
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                searchList = new ArrayList<>();
+                if (filterOption==0){
+                    for (GroundModel model:list1){
+                        if (model.getGname().toLowerCase().contains(s.toString().toLowerCase())){
+                            searchList.add(model);
+                        }
+                    }
+                }
+                else if (filterOption==1){
+                    for (GroundModel model:list1){
+                        if (model.getGlocality().toLowerCase().contains(s.toString().toLowerCase())){
+                            searchList.add(model);
+                        }
+                    }
+                }
+                else if (filterOption==2){
+                    for (GroundModel model:list1){
+                        if (model.getGaddress().toLowerCase().contains(s.toString().toLowerCase())){
+                            searchList.add(model);
+                        }
+                    }
+                }
+                GroundAdapter adapter = new GroundAdapter(view.getContext(),searchList);
+                LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
+                manager.setOrientation(RecyclerView.VERTICAL);
+                homeRecyclerView.setLayoutManager(manager);
+                homeRecyclerView.setAdapter(adapter);
             }
         });
     }

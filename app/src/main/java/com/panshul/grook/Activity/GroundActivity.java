@@ -2,6 +2,7 @@ package com.panshul.grook.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,11 +54,15 @@ public class GroundActivity extends AppCompatActivity {
     ArrayList<DateModel> dateList;
     ArrayList<SlotModel> slotList;
     ArrayList<SportModel> sportList;
+    LottieAnimationView animation;
+    ConstraintLayout cl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ground);
         findViewId();
+        animation.setVisibility(View.VISIBLE);
+        cl.setVisibility(View.INVISIBLE);
         dateList = new ArrayList<>();
         slotList = new ArrayList<>();
         sportList = new ArrayList<>();
@@ -122,6 +128,8 @@ public class GroundActivity extends AppCompatActivity {
         sportR = findViewById(R.id.sportRecyclerView);
         slotR = findViewById(R.id.slotRecyclerView);
         image = findViewById(R.id.mainGroundImage);
+        animation = findViewById(R.id.groundAnimationView);
+        cl = findViewById(R.id.activityGroundCl);
     }
     public void saveData(){
         Gson gson = new Gson();
@@ -220,6 +228,11 @@ public class GroundActivity extends AppCompatActivity {
         GridLayoutManager manager = new GridLayoutManager(GroundActivity.this,2);
         slotR.setAdapter(slotAdapter);
         slotR.setLayoutManager(manager);
+
+            cl.setVisibility(View.VISIBLE);
+            animation.pauseAnimation();
+            animation.setVisibility(View.INVISIBLE);
+
     }
 }
 
