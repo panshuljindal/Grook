@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,7 +37,8 @@ public class HomeFragment extends Fragment {
     RecyclerView homeRecyclerView;
     List<GroundModel> list1;
     ImageView searchImageView,refresh,cancel;
-    ConstraintLayout searchCl;
+    ConstraintLayout searchCl,homeCl;
+    LottieAnimationView animationView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,10 @@ public class HomeFragment extends Fragment {
         refresh = view.findViewById(R.id.homeRefresh);
         cancel = view.findViewById(R.id.homeCancel);
         searchCl = view.findViewById(R.id.searchCl);
+        animationView = view.findViewById(R.id.homeAnimationView);
+        homeCl = view.findViewById(R.id.homeCL);
+        animationView.setVisibility(View.VISIBLE);
+        homeCl.setVisibility(View.INVISIBLE);
         onClick();
         addData();
         loadData();
@@ -95,9 +101,14 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list1.clear();
                 for (DataSnapshot ds:snapshot.getChildren()){
-                    GroundModel model = ds.getValue(GroundModel.class);
-                    if (model.getGcity().toLowerCase().equals(city.toLowerCase())){
-                        list1.add(model);
+                    try {
+                        GroundModel model = ds.getValue(GroundModel.class);
+                        if (model.getGcity().toLowerCase().equals(city.toLowerCase())){
+                            list1.add(model);
+                        }
+                    }
+                    catch (Exception e){
+
                     }
                 }
                 saveData();
@@ -122,5 +133,15 @@ public class HomeFragment extends Fragment {
         manager.setOrientation(RecyclerView.VERTICAL);
         homeRecyclerView.setLayoutManager(manager);
         homeRecyclerView.setAdapter(adapter);
+        if (list1.isEmpty()){
+            homeCl.setVisibility(View.INVISIBLE);
+            animationView.setVisibility(View.VISIBLE);
+
+        }
+        else {
+            homeCl.setVisibility(View.VISIBLE);
+            animationView.pauseAnimation();
+            animationView.setVisibility(View.INVISIBLE);
+        }
     }
 }

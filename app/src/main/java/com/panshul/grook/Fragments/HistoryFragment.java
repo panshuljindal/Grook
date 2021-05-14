@@ -3,6 +3,7 @@ package com.panshul.grook.Fragments;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,7 +33,9 @@ public class HistoryFragment extends Fragment {
     View view;
     RecyclerView recyclerView;
     List<UserHistoryModel> list1;
-    DatabaseReference myref,myref1;
+    DatabaseReference myref;
+    ConstraintLayout searchCl,homeCl;
+    LottieAnimationView animationView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,11 @@ public class HistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_history, container, false);
         recyclerView = view.findViewById(R.id.pastBookingsRecyclerView);
+        //searchCl = view.findViewById(R.id.searchCl);
+        animationView = view.findViewById(R.id.historyAnimationView);
+        homeCl = view.findViewById(R.id.historyCl);
+        animationView.setVisibility(View.VISIBLE);
+        homeCl.setVisibility(View.INVISIBLE);
         list1 = new ArrayList<>();
         myref = FirebaseDatabase.getInstance().getReference("History").child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
@@ -56,10 +65,16 @@ public class HistoryFragment extends Fragment {
         myref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 list1.clear();
                 for (DataSnapshot ds :snapshot.getChildren()){
-                    UserHistoryModel model = ds.getValue(UserHistoryModel.class);
-                    list1.add(model);
+                   try {
+                       UserHistoryModel model = ds.getValue(UserHistoryModel.class);
+                       list1.add(model);
+
+                   }catch (Exception e){
+
+                   }
                 }
                 adapter();
                 //Gson gson = new Gson();
@@ -79,5 +94,15 @@ public class HistoryFragment extends Fragment {
         manager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
+        if (list1.isEmpty()){
+            homeCl.setVisibility(View.INVISIBLE);
+            animationView.setVisibility(View.VISIBLE);
+
+        }
+        else {
+            homeCl.setVisibility(View.VISIBLE);
+            animationView.pauseAnimation();
+            animationView.setVisibility(View.INVISIBLE);
+        }
     }
 }

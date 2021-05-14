@@ -75,8 +75,8 @@ public class FinalCheckout extends AppCompatActivity {
                             Log.i("avail",avail);
                             if (Integer.valueOf(avail)>0){
                                 Toast.makeText(FinalCheckout.this, "Booking Successful", Toast.LENGTH_SHORT).show();
-                                AllHistoryModel model1 = new AllHistoryModel(ground.getGpic2(),ground.getGname(),ground.getGaddress(),ground.getGtiming(),ground.getGclosed(),ground.getGsport(),booking.getBid(),ground.getGid(),booking.getSport(),getSharedPreferences("com.panshul.grook.userdata",MODE_PRIVATE).getString("name",""),booking.getDate(),booking.getSlot());
-                                UserHistoryModel model = new UserHistoryModel(ground.getGname(),booking.getSport(),booking.getPrice(),booking.getDate(),ground.getGpic2(),booking.getSlot(),booking.getBid(),ground.getGid(),ground.getGaddress(),ground.getGpic());
+                                AllHistoryModel model1 = new AllHistoryModel(getSharedPreferences("com.panshul.grook.userdata",MODE_PRIVATE).getString("name",""),booking.getSlot(),booking.getSport(),booking.getDate(),booking.getBid());
+                                UserHistoryModel model = new UserHistoryModel(ground.getGname(),booking.getSport(),booking.getPrice(),booking.getDate(),ground.getGpic2(),booking.getSlot(),booking.getBid(),ground.getGid(),ground.getGaddress(),ground.getGpic(),ground.getGtiming(),ground.getGclosed(),ground.getGsport());
                                 myref1.child("Ground").child(ground.getGid()).child(booking.getBid()).setValue(model1);
                                 myref1.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(booking.getBid()).setValue(model);
                                 myref.setValue(String.valueOf(Integer.valueOf(avail)-1));
@@ -88,7 +88,7 @@ public class FinalCheckout extends AppCompatActivity {
                             }
                         }
                         catch (Exception e){
-                            Log.i("avail",e.getMessage());
+                            //Log.i("avail",e.getMessage());
                             Toast.makeText(FinalCheckout.this, "Slot not Available", Toast.LENGTH_SHORT).show();
                         }
                     }

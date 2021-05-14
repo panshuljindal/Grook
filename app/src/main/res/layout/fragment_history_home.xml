@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.HistoryHomeFragment">
+    tools:context=".Fragments.HistoryHomeFragment"
+    android:background="@color/white">
 
-    <ScrollView
-        android:id="@+id/scrollView2"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/playlistcardView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -20,7 +20,66 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/groundName2"
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:fontFamily="@font/lexend_medium"
+                android:text="Grook"
+                android:textColor="@color/groundHeading"
+                android:textSize="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView10"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="11dp"
+                android:layout_marginBottom="11dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_logo" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playlistcardView"
+        app:layout_constraintVertical_bias="1.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/hsImage"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginBottom="18dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ground1"
+                app:layout_constraintBottom_toTopOf="@+id/hsName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/playlistcardView" />
+
+            <TextView
+                android:id="@+id/hsName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -34,10 +93,10 @@
                 android:textSize="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+                app:layout_constraintTop_toBottomOf="@+id/hsImage" />
 
             <TextView
-                android:id="@+id/groundAddress2"
+                android:id="@+id/hsAddress"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -51,7 +110,7 @@
                 android:textSize="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/groundName2" />
+                app:layout_constraintTop_toBottomOf="@+id/hsName" />
 
             <ImageView
                 android:id="@+id/imageView15"
@@ -65,7 +124,7 @@
                 android:src="@drawable/ic_dash"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/groundAddress2" />
+                app:layout_constraintTop_toBottomOf="@+id/hsAddress" />
 
             <ImageView
                 android:id="@+id/imageView12"
@@ -79,11 +138,11 @@
                 app:srcCompat="@drawable/ic_sport" />
 
             <TextView
-                android:id="@+id/groundSport2"
+                android:id="@+id/hsSport"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="25dp"
                 android:layout_marginRight="25dp"
@@ -102,22 +161,23 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="4dp"
                 android:layout_marginRight="4dp"
-                app:layout_constraintEnd_toStartOf="@+id/groundTiming2"
+                app:layout_constraintEnd_toStartOf="@+id/hsTiming"
+                app:layout_constraintStart_toStartOf="@+id/imageView8"
                 app:layout_constraintTop_toBottomOf="@+id/imageView15"
                 app:srcCompat="@drawable/ic_timer" />
 
             <TextView
-                android:id="@+id/groundTiming2"
+                android:id="@+id/hsTiming"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginRight="24dp"
                 android:fontFamily="@font/lexend_medium"
                 android:text="0500 to 2100 hr"
                 android:textColor="@color/groundGrey"
                 android:textSize="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView13"
                 app:layout_constraintTop_toBottomOf="@+id/imageView15" />
 
             <ImageView
@@ -132,74 +192,71 @@
                 app:srcCompat="@drawable/ic_closed" />
 
             <TextView
-                android:id="@+id/groundClosed2"
+                android:id="@+id/hsclosed"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/lexend_medium"
                 android:text="Closed Friday"
                 android:textColor="@color/groundRed"
                 android:textSize="12dp"
                 app:layout_constraintStart_toEndOf="@+id/imageView14"
-                app:layout_constraintTop_toBottomOf="@+id/groundSport2" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView12" />
 
             <ImageView
                 android:id="@+id/imageView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_profilegrey"
+                app:layout_constraintEnd_toStartOf="@+id/hsBookedBy"
+                app:layout_constraintTop_toBottomOf="@+id/imageView12" />
+
+            <TextView
+                android:id="@+id/hsBookedBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:fontFamily="@font/lexend_medium"
+                android:text="Booked by 65 Users"
+                android:textColor="@color/groundGrey"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView12" />
+
+            <TextView
+                android:id="@+id/hsName2"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_marginBottom="5000dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ground1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:fontFamily="@font/lexend_medium"
+                android:text="Previously Booked By"
+                android:textColor="@color/groundHeading"
+                android:textSize="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView14" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/historyHomeRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/playlistcardView" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/playlistcardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/textView6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:fontFamily="@font/lexend_medium"
-                        android:text="Grook"
-                        android:textColor="@color/groundHeading"
-                        android:textSize="24dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageView10"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageView
-                        android:id="@+id/imageView10"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginLeft="24dp"
-                        android:layout_marginTop="11dp"
-                        android:layout_marginBottom="11dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/textView"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/ic_logo" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+                app:layout_constraintTop_toBottomOf="@+id/hsName2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

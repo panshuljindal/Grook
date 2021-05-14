@@ -1,13 +1,13 @@
 package com.panshul.grook.Model;
 
 public class UserHistoryModel {
-    String gname,sport,price,date,slot,bid,gid,address,gpic,gpic2;
+    String gname,sport,price,date,slot,bid,gid,address,gpic,gpic2,gtiming,gclosed,gsport;
 
     public UserHistoryModel(){
 
     }
 
-    public UserHistoryModel(String gname, String sport, String price, String date,String gpic2, String slot, String bid, String gid, String address, String gpic) {
+    public UserHistoryModel(String gname, String sport, String price, String date,String gpic2, String slot, String bid, String gid, String address, String gpic,String gtiming,String gclosed,String gsport) {
         this.gname = gname;
         this.sport = sport;
         this.price = price;
@@ -18,6 +18,33 @@ public class UserHistoryModel {
         this.address = address;
         this.gpic = gpic;
         this.gpic2=gpic2;
+        this.gtiming = gtiming;
+        this.gclosed = gclosed;
+        this.gsport = gsport;
+    }
+
+    public String getGsport() {
+        return gsport;
+    }
+
+    public void setGsport(String gsport) {
+        this.gsport = gsport;
+    }
+
+    public String getGtiming() {
+        return gtiming;
+    }
+
+    public void setGtiming(String gtiming) {
+        this.gtiming = gtiming;
+    }
+
+    public String getGclosed() {
+        return gclosed;
+    }
+
+    public void setGclosed(String gclosed) {
+        this.gclosed = gclosed;
     }
 
     public String getGpic2() {
