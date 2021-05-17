@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,9 +24,11 @@ import java.util.regex.Pattern;
 public class EditProfile extends AppCompatActivity {
 
     Button edit;
-    EditText name, email, phone, city;
+    EditText name, phone, email;
+    AutoCompleteTextView city;
     DatabaseReference myref;
     ImageView cancel;
+    String[] cities = {"Delhi","Mumbai","Chennai"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,7 @@ public class EditProfile extends AppCompatActivity {
         city = findViewById(R.id.profileCityEditText);
         edit = findViewById(R.id.buttonEditProfile);
         cancel = findViewById(R.id.editProfileCancel);
+        email.setEnabled(false);
         SharedPreferences pref = getSharedPreferences("com.panshul.grook.userdata", MODE_PRIVATE);
         name.setText(pref.getString("name", ""));
         email.setText(pref.getString("email", ""));
@@ -42,6 +47,9 @@ public class EditProfile extends AppCompatActivity {
         city.setText(pref.getString("city", ""));
         myref = FirebaseDatabase.getInstance().getReference("User");
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,cities);
+        city.setThreshold(1);
+        city.setAdapter(adapter);
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,16 +81,18 @@ public class EditProfile extends AppCompatActivity {
 
     }
 
-    public boolean checkCity() {
+    public boolean checkCity(){
 
-        if (city.getText().toString().equals("Delhi")) {
-            return true;
-        } else if (city.getText().toString().equals("Mumbai")) {
-            return true;
-        } else if (city.getText().toString().equals("Kolkata")) {
+        if (city.getText().toString().equals("Delhi")){
             return true;
         }
-        Toast.makeText(this, "Please enter correct city", Toast.LENGTH_SHORT).show();
+        else if (city.getText().toString().equals("Mumbai")){
+            return true;
+        }
+        else if (city.getText().toString().equals("Chennai")){
+            return true;
+        }
+        Toast.makeText(this, "Please enter a correct city", Toast.LENGTH_SHORT).show();
         return false;
     }
 

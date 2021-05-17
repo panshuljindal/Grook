@@ -179,8 +179,8 @@ public class HomeFragment extends Fragment {
         });
     }
     private void addData() {
-        SharedPreferences pref = view.getContext().getSharedPreferences("com.panshul.matchup.userdata",MODE_PRIVATE);
-        String city = pref.getString("city","delhi").toLowerCase();
+        SharedPreferences pref = view.getContext().getSharedPreferences("com.panshul.grook.userdata", MODE_PRIVATE);
+        String city=pref.getString("city", "");
         DatabaseReference myref = FirebaseDatabase.getInstance().getReference("Ground");
         myref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

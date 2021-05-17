@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -30,8 +31,8 @@ public class SignUp extends AppCompatActivity {
     EditText entpass,entphone,entname,entemail;
     AutoCompleteTextView cityEditText;
     FirebaseAuth mauth;
-    String[] cities = {"Delhi","Mumbai","Kolkata"};
-
+    String[] cities = {"Delhi","Mumbai","Chennai"};
+    Button btnsignup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +42,7 @@ public class SignUp extends AppCompatActivity {
         entphone =findViewById (R.id.uphone);
         entname=findViewById(R.id.uname);
         entemail=findViewById(R.id.umail);
-        Button btnsignup =findViewById(R.id.btnsignup);
+         btnsignup=findViewById(R.id.btnsignup);
         cityEditText = findViewById(R.id.cityEditText);
 
         mauth = FirebaseAuth.getInstance();
@@ -68,31 +69,33 @@ public class SignUp extends AppCompatActivity {
                 if (checkempty()) {
                     if (checkemail()) {
                         if (checkCity()) {
-                            String email = entemail.getText().toString();
-                            String pass = entpass.getText().toString();
-                            mauth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        try {
-                                            FirebaseUser user = mauth.getCurrentUser();
-                                            String uid = user.getUid();
-                                            btnsignup.setEnabled(true);
-                                            //Log.i("uid", uid);
-                                            UserModel model = new UserModel(uid,cityEditText.getText().toString(),entphone.getText().toString(),entname.getText().toString(),entemail.getText().toString());
-                                            myref.child(uid).setValue(model);
-                                            startActivity(new Intent(SignUp.this, Login.class));
-                                        } catch (Exception e) {
-                                            Toast.makeText(SignUp.this, "Error Occurred", Toast.LENGTH_SHORT).show();
+                            if (checkPassword()){
+                                String email = entemail.getText().toString();
+                                String pass = entpass.getText().toString();
+                                mauth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            try {
+                                                FirebaseUser user = mauth.getCurrentUser();
+                                                String uid = user.getUid();
+                                                btnsignup.setEnabled(true);
+                                                //Log.i("uid", uid);
+                                                UserModel model = new UserModel(uid,cityEditText.getText().toString(),entphone.getText().toString(),entname.getText().toString(),entemail.getText().toString());
+                                                myref.child(uid).setValue(model);
+                                                startActivity(new Intent(SignUp.this, Login.class));
+                                            } catch (Exception e) {
+                                                Toast.makeText(SignUp.this, "Error Occurred", Toast.LENGTH_SHORT).show();
+                                                btnsignup.setEnabled(true);
+                                            }
+                                        } else {
+                                            Toast.makeText(SignUp.this, "SignUp failed please try again!", Toast.LENGTH_SHORT).show();
                                             btnsignup.setEnabled(true);
                                         }
-                                    } else {
-                                        Toast.makeText(SignUp.this, "SignUp failed please try again!", Toast.LENGTH_SHORT).show();
-                                        btnsignup.setEnabled(true);
-                                    }
 
-                                }
-                            });
+                                    }
+                                });
+                            }
                         }
                     }
                 }
@@ -100,19 +103,24 @@ public class SignUp extends AppCompatActivity {
         });
     }
     public boolean checkCity(){
-
+        Log.i("cityEditText",cityEditText.getText().toString());
         if (cityEditText.getText().toString().equals("Delhi")){
+            Log.i("city","Delhi");
+
             return true;
         }
 
-        else if (cityEditText.getText().toString().equals("Mumbai")){
+        if (cityEditText.getText().toString().equals("Mumbai")){
+            Log.i("city","Mumbai");
             return true;
         }
 
-        else if (cityEditText.getText().toString().equals("Kolkata")){
+        if (cityEditText.getText().toString().equals("Chennai")){
+            Log.i("city","Chennai");
             return true;
         }
-        Toast.makeText(this, "Please enter correct city", Toast.LENGTH_SHORT).show();
+        btnsignup.setEnabled(true);
+        Toast.makeText(this, "Please enter a correct city", Toast.LENGTH_SHORT).show();
         return false;
     }
     public boolean checkemail(){
@@ -120,43 +128,85 @@ public class SignUp extends AppCompatActivity {
         Pattern emailpattern = Pattern.compile("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+");
         Matcher emailMatcher= emailpattern.matcher(tempemail);
         if(emailMatcher.matches()){
+            Log.i("email","matched");
             return true;
         }
         Toast.makeText(this, "Please enter a valid email id", Toast.LENGTH_SHORT).show();
         entemail.requestFocus();
+        btnsignup.setEnabled(true);
         return false;
     }
     public Boolean checkempty(){
         if(entname.getText().length()==0){
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
             entname.requestFocus();
+            btnsignup.setEnabled(true);
             return false;
         }
         else if(entphone.getText().length()==0){
             Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show();
             entphone.requestFocus();
+            btnsignup.setEnabled(true);
             return false;
         }
         else if(entemail.getText().length()==0){
             Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show();
             entemail.requestFocus();
+            btnsignup.setEnabled(true);
             return false;
         }
         else if(cityEditText.getText().length()==0){
             Toast.makeText(this, "Please enter your city", Toast.LENGTH_SHORT).show();
             cityEditText.requestFocus();
+            btnsignup.setEnabled(true);
             return false;
         }
         else if(entpass.getText().length()==0){
             Toast.makeText(this, "Please enter your password", Toast.LENGTH_SHORT).show();
             entpass.requestFocus();
+            btnsignup.setEnabled(true);
             return false;
         }
-        else if(entpass.getText().length()<=6){
-            Toast.makeText(this, "Please enter minimum 6 characters", Toast.LENGTH_SHORT).show();
+        else if(entpass.getText().length()<=8){
+            Toast.makeText(this, "Please enter minimum 8 characters", Toast.LENGTH_SHORT).show();
             entpass.requestFocus();
+            btnsignup.setEnabled(true);
             return false;
         }
+        else if (entphone.getText().length()>10 | entphone.getText().length()<10){
+            Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show();
+            entphone.requestFocus();
+            btnsignup.setEnabled(true);
+            return false;
+        }
+
         return true;
+        }
+
+        public boolean checkPassword(){
+        String inputString = entpass.getText().toString();
+            Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
+            Pattern pattern1 = Pattern.compile("[0-9]");
+            Matcher matcher = pattern.matcher(inputString);
+            Matcher matcher1 = pattern1.matcher(inputString);
+            boolean special= matcher.find();
+            boolean number = matcher1.find();
+            boolean hasUppercase = !inputString.equals(inputString.toLowerCase());
+            if (!special){
+                Toast.makeText(this, "Password should have at least one special character", Toast.LENGTH_SHORT).show();
+                btnsignup.setEnabled(true);
+                return false;
+            }
+            if (!number) {
+                Toast.makeText(this, "Password should have at least one number", Toast.LENGTH_SHORT).show();
+                btnsignup.setEnabled(true);
+                return false;
+            }
+            if (!hasUppercase){
+                Toast.makeText(this, "Password should have at least one uppercase", Toast.LENGTH_SHORT).show();
+                btnsignup.setEnabled(true);
+                return false;
+            }
+            return true;
         }
     }

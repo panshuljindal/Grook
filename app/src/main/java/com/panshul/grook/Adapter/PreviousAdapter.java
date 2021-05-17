@@ -36,7 +36,7 @@ public class PreviousAdapter extends RecyclerView.Adapter<PreviousAdapter.MyView
     public void onBindViewHolder(@NonNull  MyViewHolder holder, int position) {
         AllHistoryModel model = list.get(position);
         holder.name.setText(model.getName());
-        holder.date.setText(model.getSport() + "  •  "+unixconvert(model.getDate()));
+        holder.date.setText(model.getSport() + "  •  "+unixconvert(model.getDate())+"  •  "+model.getPhone());
     }
     public String unixconvert(String time){
         long dv = Long.valueOf(time)*1000;// its need to be in milisecond

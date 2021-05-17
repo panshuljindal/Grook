@@ -75,7 +75,7 @@ public class FinalCheckout extends AppCompatActivity {
                             Log.i("avail",avail);
                             if (Integer.valueOf(avail)>0){
                                 Toast.makeText(FinalCheckout.this, "Booking Successful", Toast.LENGTH_SHORT).show();
-                                AllHistoryModel model1 = new AllHistoryModel(getSharedPreferences("com.panshul.grook.userdata",MODE_PRIVATE).getString("name",""),booking.getSlot(),booking.getSport(),booking.getDate(),booking.getBid());
+                                AllHistoryModel model1 = new AllHistoryModel(getSharedPreferences("com.panshul.grook.userdata",MODE_PRIVATE).getString("name",""),booking.getSlot(),booking.getSport(),booking.getDate(),booking.getBid(),getSharedPreferences("com.panshul.grook.userdata",MODE_PRIVATE).getString("phone",""));
                                 UserHistoryModel model = new UserHistoryModel(ground.getGname(),booking.getSport(),booking.getPrice(),booking.getDate(),ground.getGpic2(),booking.getSlot(),booking.getBid(),ground.getGid(),ground.getGaddress(),ground.getGpic(),ground.getGtiming(),ground.getGclosed(),ground.getGsport());
                                 myref1.child("Ground").child(ground.getGid()).child(booking.getBid()).setValue(model1);
                                 myref1.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(booking.getBid()).setValue(model);

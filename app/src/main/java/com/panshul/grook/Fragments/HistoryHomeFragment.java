@@ -1,6 +1,7 @@
 package com.panshul.grook.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
@@ -32,8 +34,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.panshul.grook.Activity.GroundActivity;
 import com.panshul.grook.Adapter.PreviousAdapter;
 import com.panshul.grook.Model.AllHistoryModel;
+import com.panshul.grook.Model.GroundModel;
 import com.panshul.grook.Model.UserHistoryModel;
 import com.panshul.grook.R;
 
@@ -48,7 +52,7 @@ public class HistoryHomeFragment extends Fragment {
     ArrayList<AllHistoryModel> list;
     TextView name,address,sport,timing,closed,bookedBy;
     RecyclerView recyclerView;
-    ConstraintLayout cl;
+    ConstraintLayout cl,toGround;
     LottieAnimationView animation;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,6 +97,30 @@ public class HistoryHomeFragment extends Fragment {
         closed.setText(user.getGclosed());
         bookedBy.setText("Booked by 1 User");
         addData();
+        toGround.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toGround.setEnabled(false);
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Ground").child(user.getGid());
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull  DataSnapshot snapshot) {
+                        GroundModel model = snapshot.getValue(GroundModel.class);
+                        String json = gson.toJson(model);
+                        Intent i = new Intent(v.getContext(), GroundActivity.class);
+                        i.putExtra("ground",json);
+                        toGround.setEnabled(false);
+                        startActivity(i);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull  DatabaseError error) {
+                        toGround.setEnabled(false);
+                        Toast.makeText(view.getContext(), "Error occurred!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
         return view;
     }
     public void findViewByID(){
@@ -106,6 +134,7 @@ public class HistoryHomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.historyHomeRecyclerView);
         cl = view.findViewById(R.id.historyHomeCl);
         animation = view.findViewById(R.id.historyHomeAnimationView);
+        toGround = view.findViewById(R.id.groundToActivity);
     }
     public void addData(){
         DatabaseReference myref = FirebaseDatabase.getInstance().getReference("History").child("Ground").child(user.getGid());
