@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MatchUp">
-        <activity android:name=".Activity.CheckEmail"></activity>
+        <activity android:name=".Activity.ForgotPassword"></activity>
+        <activity android:name=".Activity.CheckEmail" />
         <activity android:name=".Activity.EditProfile" />
         <activity android:name=".Activity.FinalCheckout" />
         <activity android:name=".Activity.GroundActivity" />

@@ -2,6 +2,9 @@ package com.panshul.grook.Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +18,17 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.panshul.grook.Fragments.HistoryHomeFragment;
 import com.panshul.grook.Model.UserHistoryModel;
 import com.panshul.grook.R;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -45,11 +54,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         UserHistoryModel model = list1.get(position);
+        Glide.with(context).load(model.getGpic()).priority(Priority.HIGH).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(holder.image);
         holder.name.setText(model.getGname());
         holder.address.setText(model.getAddress());
         holder.sport.setText(model.getSport());
         holder.date.setText(unixconvertDay(model.getDate())+", "+unixconvert(model.getDate()));
-        Glide.with(context).load(model.getGpic()).into(holder.image);
         holder.price.setText("Rs. "+model.getPrice());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

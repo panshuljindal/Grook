@@ -39,7 +39,7 @@ public class EditProfile extends AppCompatActivity {
         city = findViewById(R.id.profileCityEditText);
         edit = findViewById(R.id.buttonEditProfile);
         cancel = findViewById(R.id.editProfileCancel);
-        email.setEnabled(false);
+        email.setFocusable(false);
         SharedPreferences pref = getSharedPreferences("com.panshul.grook.userdata", MODE_PRIVATE);
         name.setText(pref.getString("name", ""));
         email.setText(pref.getString("email", ""));

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -44,6 +45,7 @@ public class HistoryFragment extends Fragment {
     ConstraintLayout searchCl,homeCl;
     LottieAnimationView animationView;
     boolean isEmpty;
+    TextView noBookings;
     EditText search;
     ImageView searchImageView,refresh,cancel;
 
@@ -61,6 +63,7 @@ public class HistoryFragment extends Fragment {
         searchCl = view.findViewById(R.id.historySearchCl);
         searchImageView = view.findViewById(R.id.historySearch);
         refresh = view.findViewById(R.id.historyRefresh);
+        noBookings = view.findViewById(R.id.textView19);
         cancel = view.findViewById(R.id.historyCancel);
         search = view.findViewById(R.id.historySearchEditText);
         isEmpty = true;
@@ -72,7 +75,6 @@ public class HistoryFragment extends Fragment {
 
         list1 = new ArrayList<>();
         myref = FirebaseDatabase.getInstance().getReference("History").child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-
         addData();
 
         onclick();
@@ -102,6 +104,7 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 animationView.setVisibility(View.VISIBLE);
+                animationView.playAnimation();
                 homeCl.setVisibility(View.INVISIBLE);
                 addData();
             }
@@ -137,7 +140,7 @@ public class HistoryFragment extends Fragment {
         myref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                noBookings.setVisibility(View.INVISIBLE);
                 list1.clear();
                 for (DataSnapshot ds :snapshot.getChildren()){
                    try {
@@ -174,22 +177,22 @@ public class HistoryFragment extends Fragment {
                 @Override
                 public void run() {
                     if (isEmpty==false){
-
+                        noBookings.setVisibility(View.INVISIBLE);
                     }
                     else {
                         homeCl.setVisibility(View.VISIBLE);
-                        animationView.pauseAnimation();
                         animationView.setVisibility(View.INVISIBLE);
-                        Toast.makeText(view.getContext(), "No bookings Found!", Toast.LENGTH_SHORT).show();
+                        animationView.pauseAnimation();
+                        noBookings.setVisibility(View.VISIBLE);
                     }
                 }
-            },300);
+            },5000);
         }
         else {
             isEmpty=false;
             homeCl.setVisibility(View.VISIBLE);
-            animationView.pauseAnimation();
             animationView.setVisibility(View.INVISIBLE);
+            animationView.pauseAnimation();
         }
     }
 }

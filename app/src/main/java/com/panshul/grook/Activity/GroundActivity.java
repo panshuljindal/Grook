@@ -75,14 +75,15 @@ public class GroundActivity extends AppCompatActivity {
         addDate();
     }
     void setOptions(){
+        Glide.with(this).load(ground.getGpic()).into(image);
+        image.setClipToOutline(true);
         name.setText(ground.getGname());
         address.setText(ground.getGaddress());
         sport.setText(ground.getGsport());
         timing.setText(ground.getGtiming());
         rs.setText("-");
         booking  = new BookingModel(UUID.randomUUID().toString(),ground.getGid(),"null","null","null","null");
-        Glide.with(this).load(ground.getGpic()).into(image);
-        image.setClipToOutline(true);
+
         //saveData();
         next.setOnClickListener(new View.OnClickListener() {
             @Override

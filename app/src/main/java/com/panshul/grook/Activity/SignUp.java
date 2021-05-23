@@ -48,7 +48,7 @@ public class SignUp extends AppCompatActivity {
         mauth = FirebaseAuth.getInstance();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,cities);
-        cityEditText.setThreshold(1);
+        cityEditText.setThreshold(3);
         cityEditText.setAdapter(adapter);
 
 
@@ -131,38 +131,38 @@ public class SignUp extends AppCompatActivity {
             Log.i("email","matched");
             return true;
         }
-        Toast.makeText(this, "Please enter a valid email id", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Please enter a valid Email ID", Toast.LENGTH_SHORT).show();
         entemail.requestFocus();
         btnsignup.setEnabled(true);
         return false;
     }
     public Boolean checkempty(){
         if(entname.getText().length()==0){
-            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please Enter your Name", Toast.LENGTH_SHORT).show();
             entname.requestFocus();
             btnsignup.setEnabled(true);
             return false;
         }
         else if(entphone.getText().length()==0){
-            Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please Enter your Phone Number", Toast.LENGTH_SHORT).show();
             entphone.requestFocus();
             btnsignup.setEnabled(true);
             return false;
         }
         else if(entemail.getText().length()==0){
-            Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter your Email ID", Toast.LENGTH_SHORT).show();
             entemail.requestFocus();
             btnsignup.setEnabled(true);
             return false;
         }
         else if(cityEditText.getText().length()==0){
-            Toast.makeText(this, "Please enter your city", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter your City", Toast.LENGTH_SHORT).show();
             cityEditText.requestFocus();
             btnsignup.setEnabled(true);
             return false;
         }
         else if(entpass.getText().length()==0){
-            Toast.makeText(this, "Please enter your password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter your Password", Toast.LENGTH_SHORT).show();
             entpass.requestFocus();
             btnsignup.setEnabled(true);
             return false;
@@ -174,7 +174,7 @@ public class SignUp extends AppCompatActivity {
             return false;
         }
         else if (entphone.getText().length()>10 | entphone.getText().length()<10){
-            Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter a valid Phone Number", Toast.LENGTH_SHORT).show();
             entphone.requestFocus();
             btnsignup.setEnabled(true);
             return false;

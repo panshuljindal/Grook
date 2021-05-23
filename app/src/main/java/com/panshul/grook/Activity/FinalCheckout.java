@@ -51,6 +51,7 @@ public class FinalCheckout extends AppCompatActivity {
         Type type1 = new TypeToken<GroundModel>() {}.getType();
         ground = gson.fromJson(json,type1);
         booking = gson.fromJson(json1,type);
+
         initialise();
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +135,8 @@ public class FinalCheckout extends AppCompatActivity {
         }
     }
     void initialise(){
+        Glide.with(this).load(ground.getGpic()).into(image);
+        image.setClipToOutline(true);
         name.setText(ground.getGname());
         address.setText(ground.getGaddress());
         sport.setText(booking.getSport());
@@ -144,8 +147,7 @@ public class FinalCheckout extends AppCompatActivity {
         total.setText("Rs. "+String.valueOf(tota));
         mainTotal.setText("Rs. "+String.valueOf(tota));
         booking.setPrice(String.valueOf(tota));
-        Glide.with(this).load(ground.getGpic()).into(image);
-        image.setClipToOutline(true);
+
 
     }
     void findViewBy(){

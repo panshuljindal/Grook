@@ -84,9 +84,7 @@ public class HistoryHomeFragment extends Fragment {
 
             @Override
             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                cl.setVisibility(View.VISIBLE);
-                animation.setVisibility(View.INVISIBLE);
-                animation.pauseAnimation();
+
                 return false;
             }
         }).into(image);
@@ -172,5 +170,8 @@ public class HistoryHomeFragment extends Fragment {
         manager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
+        cl.setVisibility(View.VISIBLE);
+        animation.setVisibility(View.INVISIBLE);
+        animation.pauseAnimation();
     }
 }

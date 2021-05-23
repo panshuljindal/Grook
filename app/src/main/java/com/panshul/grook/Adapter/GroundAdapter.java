@@ -2,6 +2,9 @@ package com.panshul.grook.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +16,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.panshul.grook.Activity.GroundActivity;
+import com.panshul.grook.Activity.Login;
 import com.panshul.grook.Model.GroundModel;
 import com.panshul.grook.R;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class GroundAdapter extends RecyclerView.Adapter<GroundAdapter.MyViewHolder> {
@@ -55,13 +70,14 @@ public class GroundAdapter extends RecyclerView.Adapter<GroundAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         GroundModel model = list.get(position);
+        Glide.with(context).load(model.getGpic()).priority(Priority.HIGH).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(holder.image);
+       // new ImageLoadTask(model.getGpic(),holder.image).execute();
         holder.image.setClipToOutline(true);
         holder.name.setText(model.getGname());
         holder.address.setText(model.getGaddress());
         holder.sport.setText(model.getGsport());
         holder.timing.setText(model.getGtiming());
         holder.closed.setText(model.getGclosed());
-        Glide.with(context).load(model.getGpic()).into(holder.image);
 
         holder.book.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +89,26 @@ public class GroundAdapter extends RecyclerView.Adapter<GroundAdapter.MyViewHold
                 context.startActivity(i);
             }
         });
-
+//        int i = holder.getAdapterPosition();
+//        Log.i("string",String.valueOf(list.size()));
+//        if (i==list.size()-1){
+//            Log.i("hello","hello");
+//            DatabaseReference myref = FirebaseDatabase.getInstance().getReference("Ground");
+//            myref.addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    for (DataSnapshot ds: snapshot.getChildren()){
+//                        GroundModel model = ds.getValue(GroundModel.class);
+//                        list.add(model);
+//                    }
+//                    notifyDataSetChanged();
+//                }
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
+//        }
     }
 
     @Override

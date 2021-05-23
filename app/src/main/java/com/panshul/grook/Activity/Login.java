@@ -31,6 +31,7 @@ public class Login extends AppCompatActivity {
 
     private EditText entpass;
     private EditText entemail;
+    TextView forgot;
     FirebaseAuth mauth;
     DatabaseReference myref;
 
@@ -50,6 +51,13 @@ public class Login extends AppCompatActivity {
             datasave();
             startActivity(new Intent(Login.this,MainActivity.class));
         }
+        forgot = findViewById(R.id.forgotPassword);
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Login.this, ForgotPassword.class));
+            }
+        });
         TextView logintoSignup = findViewById(R.id.loginToSignup);
         logintoSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +78,7 @@ public class Login extends AppCompatActivity {
                                     startActivity(new Intent(Login.this,MainActivity.class));
                                 }
                                 else{
-                                    Toast.makeText(Login.this, "Error Occurred!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Login.this, "Invalid Email ID or Password", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -85,19 +93,24 @@ public class Login extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 FirebaseUser user = mauth.getCurrentUser();
-                String uid = user.getUid();
-                SharedPreferences pref = getSharedPreferences("com.panshul.grook.userdata",MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
-                editor.putString("uid",uid);
-                String name = snapshot.child(uid).child("name").getValue().toString();
-                editor.putString("name",name);
-                String email = snapshot.child(uid).child("email").getValue().toString();
-                editor.putString("email",email);
-                String phone = snapshot.child(uid).child("phone").getValue().toString();
-                editor.putString("phone",phone);
-                String city = snapshot.child(uid).child("city").getValue().toString();
-                editor.putString("city",city);
-                editor.apply();
+                try {
+                    String uid = user.getUid();
+                    SharedPreferences pref = getSharedPreferences("com.panshul.grook.userdata",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("uid",uid);
+                    String name = snapshot.child(uid).child("name").getValue().toString();
+                    editor.putString("name",name);
+                    String email = snapshot.child(uid).child("email").getValue().toString();
+                    editor.putString("email",email);
+                    String phone = snapshot.child(uid).child("phone").getValue().toString();
+                    editor.putString("phone",phone);
+                    String city = snapshot.child(uid).child("city").getValue().toString();
+                    editor.putString("city",city);
+                    editor.apply();
+                }
+                catch (Exception e){
+
+                }
 
             }
 
@@ -114,18 +127,18 @@ public class Login extends AppCompatActivity {
         if(emailMatcher.matches()){
             return true;
         }
-        Toast.makeText(this, "Please enter a valid email id", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Please enter a valid Email ID", Toast.LENGTH_SHORT).show();
         entemail.requestFocus();
         return false;
     }
     public Boolean checkempty(){
         if(entemail.getText().length()==0){
-            Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter your Email ID", Toast.LENGTH_SHORT).show();
             entemail.requestFocus();
             return false;
         }
         else if(entpass.getText().length()==0){
-            Toast.makeText(this, "Please enter your password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter your Password", Toast.LENGTH_SHORT).show();
             entpass.requestFocus();
             return false;
         }

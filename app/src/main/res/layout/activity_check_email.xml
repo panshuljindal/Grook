@@ -17,7 +17,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:fontFamily="@font/lexend_regular"
-        android:text="Check your registred email for a reset password link. "
+        android:text="Check your registered email for a reset password link. "
         android:textAlignment="center"
         android:textColor="@color/subHeading"
         android:textSize="15dp"

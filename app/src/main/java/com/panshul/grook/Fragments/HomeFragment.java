@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +48,8 @@ public class HomeFragment extends Fragment {
     ConstraintLayout searchCl,homeCl;
     LottieAnimationView animationView;
     EditText search;
+    TextView noBookings;
+    boolean isEmpty;
     int filterOption;
     Button option;
     @Override
@@ -69,8 +73,10 @@ public class HomeFragment extends Fragment {
         homeCl = view.findViewById(R.id.homeCL);
         animationView.setVisibility(View.VISIBLE);
         homeCl.setVisibility(View.INVISIBLE);
+        noBookings = view.findViewById(R.id.textView20);
         search = view.findViewById(R.id.searchEditText);
         option = view.findViewById(R.id.filterOption);
+        isEmpty = true;
         onClick();
         addData();
         loadData();
@@ -129,6 +135,7 @@ public class HomeFragment extends Fragment {
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                animationView.playAnimation();
                 animationView.setVisibility(View.VISIBLE);
                 homeCl.setVisibility(View.INVISIBLE);
                 addData();
@@ -220,14 +227,29 @@ public class HomeFragment extends Fragment {
         homeRecyclerView.setLayoutManager(manager);
         homeRecyclerView.setAdapter(adapter);
         if (list1.isEmpty()){
+            isEmpty=true;
             homeCl.setVisibility(View.INVISIBLE);
             animationView.setVisibility(View.VISIBLE);
-
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (isEmpty==false){
+                        noBookings.setVisibility(View.INVISIBLE);
+                    }
+                    else {
+                        homeCl.setVisibility(View.VISIBLE);
+                        animationView.setVisibility(View.INVISIBLE);
+                        animationView.pauseAnimation();
+                        noBookings.setVisibility(View.VISIBLE);
+                    }
+                }
+            },5000);
         }
         else {
+            isEmpty=false;
             homeCl.setVisibility(View.VISIBLE);
-            animationView.pauseAnimation();
             animationView.setVisibility(View.INVISIBLE);
+            animationView.pauseAnimation();
         }
     }
 }
