@@ -60,6 +60,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         holder.sport.setText(model.getSport());
         holder.date.setText(unixconvertDay(model.getDate())+", "+unixconvert(model.getDate()));
         holder.price.setText("Rs. "+model.getPrice());
+        holder.slot.setText(model.getSlot());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +118,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView name,address,sport,date,price;
+        TextView name,address,sport,date,price,slot;
         ImageView image;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -127,6 +128,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             date = itemView.findViewById(R.id.historyDate);
             image = itemView.findViewById(R.id.historyImage);
             price = itemView.findViewById(R.id.historyPrice);
+            slot = itemView.findViewById(R.id.historySlot);
         }
     }
 }

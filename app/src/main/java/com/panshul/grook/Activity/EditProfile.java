@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,14 +24,15 @@ import com.panshul.grook.R;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class EditProfile extends AppCompatActivity {
+public class EditProfile extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Button edit;
     EditText name, phone, email;
-    AutoCompleteTextView city;
+    Spinner city;
+    TextView enterCity;
     DatabaseReference myref;
     ImageView cancel;
-    String[] cities = {"Delhi","Mumbai","Chennai"};
+    String[] cities={"","Delhi","Chennai","Mumbai"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +40,8 @@ public class EditProfile extends AppCompatActivity {
         name = findViewById(R.id.profileNameEditText);
         email = findViewById(R.id.profileEmailEditText);
         phone = findViewById(R.id.profilePhoneEditText);
-        city = findViewById(R.id.profileCityEditText);
+        enterCity = findViewById(R.id.textView22);
+        city = findViewById(R.id.spinner2);
         edit = findViewById(R.id.buttonEditProfile);
         cancel = findViewById(R.id.editProfileCancel);
         email.setFocusable(false);
@@ -44,12 +49,21 @@ public class EditProfile extends AppCompatActivity {
         name.setText(pref.getString("name", ""));
         email.setText(pref.getString("email", ""));
         phone.setText(pref.getString("phone", ""));
-        city.setText(pref.getString("city", ""));
         myref = FirebaseDatabase.getInstance().getReference("User");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,cities);
-        city.setThreshold(1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(EditProfile.this, android.R.layout.simple_spinner_dropdown_item, cities);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         city.setAdapter(adapter);
+        city.setOnItemSelectedListener(this);
+        if (pref.getString("city", "").equals("Delhi")){
+            city.setSelection(1);
+        }
+        if (pref.getString("city", "").equals("Mumbai")){
+            city.setSelection(3);
+        }
+        if (pref.getString("city", "").equals("Chennai")){
+            city.setSelection(2);
+        }
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +71,7 @@ public class EditProfile extends AppCompatActivity {
                     if (checkCity()) {
                         if (checkemail()) {
                             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            UserModel model = new UserModel(uid, city.getText().toString(), phone.getText().toString(), name.getText().toString(), email.getText().toString());
+                            UserModel model = new UserModel(uid, city.getSelectedItem().toString(), phone.getText().toString(), name.getText().toString(), email.getText().toString());
                             try {
                                 myref.child(uid).setValue(model);
                                 Toast.makeText(EditProfile.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
@@ -83,13 +97,13 @@ public class EditProfile extends AppCompatActivity {
 
     public boolean checkCity(){
 
-        if (city.getText().toString().equals("Delhi")){
+        if (city.getSelectedItem().toString().equals("Delhi")){
             return true;
         }
-        else if (city.getText().toString().equals("Mumbai")){
+        else if (city.getSelectedItem().toString().equals("Mumbai")){
             return true;
         }
-        else if (city.getText().toString().equals("Chennai")){
+        else if (city.getSelectedItem().toString().equals("Chennai")){
             return true;
         }
         Toast.makeText(this, "Please enter a correct city", Toast.LENGTH_SHORT).show();
@@ -121,7 +135,7 @@ public class EditProfile extends AppCompatActivity {
             Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show();
             email.requestFocus();
             return false;
-        } else if (city.getText().length() == 0) {
+        } else if (city.getSelectedItem().toString().equals("")) {
             Toast.makeText(this, "Please enter your city", Toast.LENGTH_SHORT).show();
             city.requestFocus();
             return false;
@@ -133,5 +147,20 @@ public class EditProfile extends AppCompatActivity {
     public void onBackPressed() {
         //super.onBackPressed();
         finish();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if(cities[position].equals("")){
+            enterCity.setVisibility(View.VISIBLE);
+        }
+        else {
+            enterCity.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

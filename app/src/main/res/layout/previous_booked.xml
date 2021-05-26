@@ -55,14 +55,17 @@
 
         <TextView
             android:id="@+id/previousDate"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
             android:fontFamily="@font/lexend_regular"
             android:text="Tennis  •  17 Apr 2020   "
             android:textColor="#9B9B9B"
             android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView16"
             app:layout_constraintTop_toBottomOf="@+id/previousName" />
     </androidx.constraintlayout.widget.ConstraintLayout>

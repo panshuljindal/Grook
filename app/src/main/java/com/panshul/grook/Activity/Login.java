@@ -49,7 +49,8 @@ public class Login extends AppCompatActivity {
         myref = database.getReference ("User");
         if(mauth.getCurrentUser()!=null){
             datasave();
-            startActivity(new Intent(Login.this,MainActivity.class));
+            Intent i = new Intent(Login.this,MainActivity.class);
+            startActivity(i);
         }
         forgot = findViewById(R.id.forgotPassword);
         forgot.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +76,7 @@ public class Login extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
                                     datasave();
+                                    Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(Login.this,MainActivity.class));
                                 }
                                 else{
@@ -89,7 +91,7 @@ public class Login extends AppCompatActivity {
 
     }
     public void datasave(){
-        myref.addValueEventListener(new ValueEventListener() {
+        myref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 FirebaseUser user = mauth.getCurrentUser();

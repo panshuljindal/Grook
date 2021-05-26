@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,12 +29,13 @@ import com.panshul.grook.R;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SignUp extends AppCompatActivity {
+public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText entpass,entphone,entname,entemail;
-    AutoCompleteTextView cityEditText;
     FirebaseAuth mauth;
-    String[] cities = {"Delhi","Mumbai","Chennai"};
+    Spinner city;
+    String[] cities = {"","Delhi","Mumbai","Chennai"};
     Button btnsignup;
+    TextView enterCity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,18 +45,19 @@ public class SignUp extends AppCompatActivity {
         entphone =findViewById (R.id.uphone);
         entname=findViewById(R.id.uname);
         entemail=findViewById(R.id.umail);
-         btnsignup=findViewById(R.id.btnsignup);
-        cityEditText = findViewById(R.id.cityEditText);
-
+        btnsignup=findViewById(R.id.btnsignup);
+        city = findViewById(R.id.spinner);
+        enterCity = findViewById(R.id.textView21);
         mauth = FirebaseAuth.getInstance();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,cities);
-        cityEditText.setThreshold(3);
-        cityEditText.setAdapter(adapter);
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(SignUp.this, android.R.layout.simple_spinner_dropdown_item, cities);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        city.setAdapter(adapter);
+        city.setOnItemSelectedListener(this);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myref = database.getReference("User");
+
 
         TextView logintoSignup = findViewById(R.id.signUpToLogin);
         logintoSignup.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +70,7 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 btnsignup.setEnabled(false);
+                //Log.i("city",city.getSelectedItem().toString());
                 if (checkempty()) {
                     if (checkemail()) {
                         if (checkCity()) {
@@ -81,11 +86,12 @@ public class SignUp extends AppCompatActivity {
                                                 String uid = user.getUid();
                                                 btnsignup.setEnabled(true);
                                                 //Log.i("uid", uid);
-                                                UserModel model = new UserModel(uid,cityEditText.getText().toString(),entphone.getText().toString(),entname.getText().toString(),entemail.getText().toString());
+                                                UserModel model = new UserModel(uid,city.getSelectedItem().toString(),entphone.getText().toString(),entname.getText().toString(),entemail.getText().toString());
                                                 myref.child(uid).setValue(model);
+                                                Toast.makeText(SignUp.this, "SignUp successful", Toast.LENGTH_SHORT).show();
                                                 startActivity(new Intent(SignUp.this, Login.class));
                                             } catch (Exception e) {
-                                                Toast.makeText(SignUp.this, "Error Occurred", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(SignUp.this, "SignUp failed please try again!", Toast.LENGTH_SHORT).show();
                                                 btnsignup.setEnabled(true);
                                             }
                                         } else {
@@ -102,21 +108,20 @@ public class SignUp extends AppCompatActivity {
             }
         });
     }
+
     public boolean checkCity(){
-        Log.i("cityEditText",cityEditText.getText().toString());
-        if (cityEditText.getText().toString().equals("Delhi")){
-            Log.i("city","Delhi");
-
+        if (city.getSelectedItem().toString().equals("Delhi")){
+            //Log.i("city","Delhi");
             return true;
         }
 
-        if (cityEditText.getText().toString().equals("Mumbai")){
-            Log.i("city","Mumbai");
+        if (city.getSelectedItem().toString().equals("Mumbai")){
+           // Log.i("city","Mumbai");
             return true;
         }
 
-        if (cityEditText.getText().toString().equals("Chennai")){
-            Log.i("city","Chennai");
+        if (city.getSelectedItem().toString().equals("Chennai")){
+            //Log.i("city","Chennai");
             return true;
         }
         btnsignup.setEnabled(true);
@@ -128,7 +133,7 @@ public class SignUp extends AppCompatActivity {
         Pattern emailpattern = Pattern.compile("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+");
         Matcher emailMatcher= emailpattern.matcher(tempemail);
         if(emailMatcher.matches()){
-            Log.i("email","matched");
+            //Log.i("email","matched");
             return true;
         }
         Toast.makeText(this, "Please enter a valid Email ID", Toast.LENGTH_SHORT).show();
@@ -155,9 +160,9 @@ public class SignUp extends AppCompatActivity {
             btnsignup.setEnabled(true);
             return false;
         }
-        else if(cityEditText.getText().length()==0){
-            Toast.makeText(this, "Please enter your City", Toast.LENGTH_SHORT).show();
-            cityEditText.requestFocus();
+        else if(city.getSelectedItem().toString().equals("")){
+            Toast.makeText(this, "Please enter a City", Toast.LENGTH_SHORT).show();
+            city.requestFocus();
             btnsignup.setEnabled(true);
             return false;
         }
@@ -209,4 +214,19 @@ public class SignUp extends AppCompatActivity {
             }
             return true;
         }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (cities[position].equals("")){
+            enterCity.setVisibility(View.VISIBLE);
+        }
+        else {
+            enterCity.setVisibility(View.INVISIBLE);
+        }
     }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+}

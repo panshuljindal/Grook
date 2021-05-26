@@ -112,17 +112,7 @@ public class HistoryFragment extends Fragment {
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                searchList=new ArrayList<>();
-                for (UserHistoryModel model:list1){
-                    if (model.getGname().toLowerCase().contains(s.toString().toLowerCase())){
-                        searchList.add(model);
-                    }
-                }
-                HistoryAdapter adapter = new HistoryAdapter(view.getContext(),searchList);
-                LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
-                manager.setOrientation(RecyclerView.VERTICAL);
-                recyclerView.setLayoutManager(manager);
-                recyclerView.setAdapter(adapter);
+
             }
 
             @Override
@@ -132,7 +122,19 @@ public class HistoryFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                searchList=new ArrayList<>();
+                noBookings.setVisibility(View.VISIBLE);
+                for (UserHistoryModel model:list1){
+                    if (model.getGname().toLowerCase().contains(s.toString().toLowerCase())){
+                        searchList.add(model);
+                    }
+                }
+                noBookings.setText("No bookings found in "+s.toString());
+                HistoryAdapter adapter = new HistoryAdapter(view.getContext(),searchList);
+                LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
+                manager.setOrientation(RecyclerView.VERTICAL);
+                recyclerView.setLayoutManager(manager);
+                recyclerView.setAdapter(adapter);
             }
         });
     }
@@ -180,13 +182,14 @@ public class HistoryFragment extends Fragment {
                         noBookings.setVisibility(View.INVISIBLE);
                     }
                     else {
+                        noBookings.setText("No Bookings found!");
                         homeCl.setVisibility(View.VISIBLE);
                         animationView.setVisibility(View.INVISIBLE);
                         animationView.pauseAnimation();
                         noBookings.setVisibility(View.VISIBLE);
                     }
                 }
-            },5000);
+            },500);
         }
         else {
             isEmpty=false;

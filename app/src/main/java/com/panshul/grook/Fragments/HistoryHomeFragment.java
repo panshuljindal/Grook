@@ -42,7 +42,9 @@ import com.panshul.grook.Model.UserHistoryModel;
 import com.panshul.grook.R;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HistoryHomeFragment extends Fragment {
 
@@ -50,7 +52,7 @@ public class HistoryHomeFragment extends Fragment {
     UserHistoryModel user;
     ImageView image;
     ArrayList<AllHistoryModel> list;
-    TextView name,address,sport,timing,closed,bookedBy;
+    TextView name,address,sport,timing,closed,bookedBy,previousName,previousDate;
     RecyclerView recyclerView;
     ConstraintLayout cl,toGround;
     LottieAnimationView animation;
@@ -66,6 +68,7 @@ public class HistoryHomeFragment extends Fragment {
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_history_home, container, false);
         SharedPreferences pref = view.getContext().getSharedPreferences("com.panshul.grook.history", Context.MODE_PRIVATE);
+        SharedPreferences pref1 = view.getContext().getSharedPreferences("com.panshul.grook.userdata", Context.MODE_PRIVATE);
         String json = pref.getString("history","");
         list = new ArrayList<>();
         //Log.i("json",json);
@@ -94,6 +97,9 @@ public class HistoryHomeFragment extends Fragment {
         timing.setText(user.getGtiming());
         closed.setText(user.getGclosed());
         bookedBy.setText("Booked by 1 User");
+        previousName.setText(pref1.getString("name",""));
+        previousDate.setText(user.getSport() + "  •  "+unixconvert(user.getDate())+"  •  "+user.getSlot());
+
         addData();
         toGround.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +127,12 @@ public class HistoryHomeFragment extends Fragment {
         });
         return view;
     }
+    public String unixconvert(String time){
+        long dv = Long.valueOf(time)*1000;// its need to be in milisecond
+        Date df = new java.util.Date(dv);
+        String vv = new SimpleDateFormat("dd MMM yyyy").format(df);
+        return vv;
+    }
     public void findViewByID(){
         image = view.findViewById(R.id.hsImage);
         name = view.findViewById(R.id.hsName);
@@ -133,6 +145,8 @@ public class HistoryHomeFragment extends Fragment {
         cl = view.findViewById(R.id.historyHomeCl);
         animation = view.findViewById(R.id.historyHomeAnimationView);
         toGround = view.findViewById(R.id.groundToActivity);
+        previousName = view.findViewById(R.id.historyPreviousName);
+        previousDate=view.findViewById(R.id.historyPreviousDate);
     }
     public void addData(){
         DatabaseReference myref = FirebaseDatabase.getInstance().getReference("History").child("Ground").child(user.getGid());
@@ -147,7 +161,14 @@ public class HistoryHomeFragment extends Fragment {
 
                         }
                         else {
-                            list.add(model);
+                            if (user.getSlot().equals(model.getSlot())){
+                                if (user.getDate().equals(model.getDate())){
+                                    if (user.getSport().equals(model.getSport())){
+                                        list.add(model);
+                                    }
+                                }
+
+                            }
                         }
                     }
                 }

@@ -1,5 +1,6 @@
 package com.panshul.grook.Fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -30,6 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.panshul.grook.Activity.MainActivity;
 import com.panshul.grook.Adapter.GroundAdapter;
 import com.panshul.grook.Model.GroundModel;
 import com.panshul.grook.R;
@@ -48,7 +50,7 @@ public class HomeFragment extends Fragment {
     ConstraintLayout searchCl,homeCl;
     LottieAnimationView animationView;
     EditText search;
-    TextView noBookings;
+    TextView noBookings,noGround;
     boolean isEmpty;
     int filterOption;
     Button option;
@@ -76,7 +78,9 @@ public class HomeFragment extends Fragment {
         noBookings = view.findViewById(R.id.textView20);
         search = view.findViewById(R.id.searchEditText);
         option = view.findViewById(R.id.filterOption);
+        noGround = view.findViewById(R.id.textView24);
         isEmpty = true;
+
         onClick();
         addData();
         loadData();
@@ -107,6 +111,7 @@ public class HomeFragment extends Fragment {
                         else {
                             filterOption=0;
                             search.setHint("Search by Ground Name");
+                            noBookings.setText("No Grounds found");
                         }
                         return false;
                     }
@@ -155,6 +160,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+                noBookings.setVisibility(View.VISIBLE);
                 searchList = new ArrayList<>();
                 if (filterOption==0){
                     for (GroundModel model:list1){
@@ -169,6 +175,9 @@ public class HomeFragment extends Fragment {
                             searchList.add(model);
                         }
                     }
+                    if (searchList.isEmpty()){
+                        noBookings.setText("No Grounds found in the "+s.toString());
+                    }
                 }
                 else if (filterOption==2){
                     for (GroundModel model:list1){
@@ -176,7 +185,11 @@ public class HomeFragment extends Fragment {
                             searchList.add(model);
                         }
                     }
+                    if (searchList.isEmpty()){
+                        noBookings.setText("No Grounds found in the "+s.toString());
+                    }
                 }
+
                 GroundAdapter adapter = new GroundAdapter(view.getContext(),searchList);
                 LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
                 manager.setOrientation(RecyclerView.VERTICAL);
@@ -228,8 +241,6 @@ public class HomeFragment extends Fragment {
         homeRecyclerView.setAdapter(adapter);
         if (list1.isEmpty()){
             isEmpty=true;
-            homeCl.setVisibility(View.INVISIBLE);
-            animationView.setVisibility(View.VISIBLE);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -237,13 +248,14 @@ public class HomeFragment extends Fragment {
                         noBookings.setVisibility(View.INVISIBLE);
                     }
                     else {
+                        noBookings.setText("No Grounds found");
                         homeCl.setVisibility(View.VISIBLE);
                         animationView.setVisibility(View.INVISIBLE);
                         animationView.pauseAnimation();
                         noBookings.setVisibility(View.VISIBLE);
                     }
                 }
-            },5000);
+            },2000);
         }
         else {
             isEmpty=false;
