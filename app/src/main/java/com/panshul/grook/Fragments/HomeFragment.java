@@ -163,16 +163,16 @@ public class HomeFragment extends Fragment {
                 noBookings.setVisibility(View.VISIBLE);
                 searchList = new ArrayList<>();
                 if (filterOption==0){
-                    for (GroundModel model:list1){
-                        if (model.getGname().toLowerCase().contains(s.toString().toLowerCase())){
-                            searchList.add(model);
+                    for (GroundModel horsePool:list1){
+                        if (horsePool.getGname().toLowerCase().contains(s.toString().toLowerCase())){
+                            searchList.add(horsePool);
                         }
                     }
                 }
                 else if (filterOption==1){
-                    for (GroundModel model:list1){
-                        if (model.getGlocality().toLowerCase().contains(s.toString().toLowerCase())){
-                            searchList.add(model);
+                    for (GroundModel horsePool:list1){
+                        if (horsePool.getGlocality().toLowerCase().contains(s.toString().toLowerCase())){
+                            searchList.add(horsePool);
                         }
                     }
                     if (searchList.isEmpty()){
@@ -180,16 +180,15 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 else if (filterOption==2){
-                    for (GroundModel model:list1){
-                        if (model.getGaddress().toLowerCase().contains(s.toString().toLowerCase())){
-                            searchList.add(model);
+                    for (GroundModel horsePool:list1){
+                        if (horsePool.getGaddress().toLowerCase().contains(s.toString().toLowerCase())){
+                            searchList.add(horsePool);
                         }
                     }
                     if (searchList.isEmpty()){
                         noBookings.setText("No Grounds found in the "+s.toString());
                     }
                 }
-
                 GroundAdapter adapter = new GroundAdapter(view.getContext(),searchList);
                 LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
                 manager.setOrientation(RecyclerView.VERTICAL);
