@@ -167,7 +167,6 @@ public class HistoryHomeFragment extends Fragment {
                                         list.add(model);
                                     }
                                 }
-
                             }
                         }
                     }
