@@ -26,7 +26,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/lexend_regular"
-            android:text="5:00 - 8:00AM"
             android:textColor="@color/groundHeading"
             android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +36,7 @@ public class ProfileFragment extends Fragment {
     View view;
     Button logout,editProfile,resetPassword;
     TextView name,email,phone,city;
+    LottieAnimationView lottie;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +56,7 @@ public class ProfileFragment extends Fragment {
         email = view.findViewById(R.id.profileEmail);
         phone = view.findViewById(R.id.profilePhone);
         city = view.findViewById(R.id.profileLocation);
-
+        lottie = view.findViewById(R.id.profileAnimationView);
 
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference myref = FirebaseDatabase.getInstance().getReference("User").child(uid);
@@ -71,16 +73,23 @@ public class ProfileFragment extends Fragment {
                     SharedPreferences pref1 = view.getContext().getSharedPreferences("com.panshul.grook.userdata",MODE_PRIVATE);
                     SharedPreferences.Editor editor1 = pref1.edit();
                     editor1.putString("name",model.getName());
+                    editor1.putBoolean("isPremium",model.isPremium()).commit();
                     editor1.putString("email",model.getEmail());
                     editor1.putString("phone",model.getPhone());
                     editor1.putString("city",model.getCity());
                     editor1.apply();
+
+                    lottie.setVisibility(View.GONE);
+                    lottie.pauseAnimation();
                 }
                 catch (Exception e){
                     name.setText("");
                     email.setText("");
                     phone.setText("");
                     city.setText("");
+
+                    lottie.setVisibility(View.GONE);
+                    lottie.pauseAnimation();
                 }
 
             }
@@ -91,9 +100,11 @@ public class ProfileFragment extends Fragment {
                 email.setText("");
                 phone.setText("");
                 city.setText("");
+
+                lottie.setVisibility(View.GONE);
+                lottie.pauseAnimation();
             }
         });
-
         onClick();
         return view;
     }

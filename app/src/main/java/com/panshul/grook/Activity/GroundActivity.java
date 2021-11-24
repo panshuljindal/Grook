@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -56,6 +57,7 @@ public class GroundActivity extends AppCompatActivity {
     ArrayList<SportModel> sportList;
     LottieAnimationView animation;
     ConstraintLayout cl;
+    boolean isPremium;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +75,9 @@ public class GroundActivity extends AppCompatActivity {
         ground = gson.fromJson(json,type);
         setOptions();
         addDate();
+        SharedPreferences pref1 = getSharedPreferences("com.panshul.grook.userdata", Context.MODE_PRIVATE);
+        isPremium = pref1.getBoolean("isPremium",false);
+
     }
     void setOptions(){
         Glide.with(this).load(ground.getGpic()).into(image);
@@ -88,6 +93,11 @@ public class GroundActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Long date =Long.valueOf(booking.getDate())*1000;
+                Long current = Long.valueOf(System.currentTimeMillis())+ 86400000L*7;
+                Log.i("date",String.valueOf(date));
+                Log.i("current",String.valueOf(current));
+                Log.i("isPremium",String.valueOf(isPremium));
                 Gson gson = new Gson();
                 String json = gson.toJson(booking);
                 if (booking.getDate().equals("null")){
@@ -98,6 +108,18 @@ public class GroundActivity extends AppCompatActivity {
                 }
                 else if (booking.getSlot().equals("null")){
                     Toast.makeText(GroundActivity.this, "Please select a Slot.", Toast.LENGTH_SHORT).show();
+                }else if(date>current ){
+                    if (isPremium){
+                        Intent i = new Intent(GroundActivity.this,FinalCheckout.class);
+                        Gson gson1 = new Gson();
+                        String json1 = gson1.toJson(ground);
+                        String json2 = gson1.toJson(booking);
+                        i.putExtra("ground",json1);
+                        i.putExtra("booking",json2);
+                        startActivity(i);
+                    }else {
+                        Toast.makeText(GroundActivity.this, "You don't have a premium, you can't book a week advance", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else {
                     Intent i = new Intent(GroundActivity.this,FinalCheckout.class);

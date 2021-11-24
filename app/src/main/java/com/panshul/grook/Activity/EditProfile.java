@@ -71,7 +71,7 @@ public class EditProfile extends AppCompatActivity implements AdapterView.OnItem
                     if (checkCity()) {
                         if (checkemail()) {
                             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                            UserModel model = new UserModel(uid, city.getSelectedItem().toString(), phone.getText().toString(), name.getText().toString(), email.getText().toString());
+                            UserModel model = new UserModel(uid, city.getSelectedItem().toString(), phone.getText().toString(), name.getText().toString(), email.getText().toString(),false);
                             try {
                                 myref.child(uid).setValue(model);
                                 Toast.makeText(EditProfile.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();

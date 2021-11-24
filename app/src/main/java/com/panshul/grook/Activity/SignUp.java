@@ -86,7 +86,7 @@ public class SignUp extends AppCompatActivity implements AdapterView.OnItemSelec
                                                 String uid = user.getUid();
                                                 btnsignup.setEnabled(true);
                                                 //Log.i("uid", uid);
-                                                UserModel model = new UserModel(uid,city.getSelectedItem().toString(),entphone.getText().toString(),entname.getText().toString(),entemail.getText().toString());
+                                                UserModel model = new UserModel(uid,city.getSelectedItem().toString(),entphone.getText().toString(),entname.getText().toString(),entemail.getText().toString(),false);
                                                 myref.child(uid).setValue(model);
                                                 Toast.makeText(SignUp.this, "SignUp successful", Toast.LENGTH_SHORT).show();
                                                 startActivity(new Intent(SignUp.this, Login.class));

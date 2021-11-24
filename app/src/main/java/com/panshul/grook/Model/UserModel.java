@@ -6,17 +6,27 @@ public class UserModel {
     String phone;
     String name;
     String email;
+    boolean isPremium;
 
     public UserModel(){
 
     }
 
-    public UserModel(String uid, String city, String phone, String name, String email) {
+    public UserModel(String uid, String city, String phone, String name, String email,boolean isPremium) {
         this.uid = uid;
         this.city = city;
         this.phone = phone;
         this.name = name;
         this.email = email;
+        this.isPremium=isPremium;
+    }
+
+    public boolean isPremium() {
+        return isPremium;
+    }
+
+    public void setPremium(boolean premium) {
+        isPremium = premium;
     }
 
     public String getUid() {

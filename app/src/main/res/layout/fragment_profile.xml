@@ -130,7 +130,6 @@
                     android:layout_marginEnd="15dp"
                     android:layout_marginRight="15dp"
                     android:fontFamily="@font/lexend_regular"
-                    android:text="Panshul Jindal"
                     android:textColor="@color/groundHeading"
                     android:textSize="17dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -183,7 +182,6 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="14dp"
                     android:fontFamily="@font/lexend_regular"
-                    android:text="panshuljindal@gmail.com"
                     android:textColor="@color/groundHeading"
                     android:textSize="17dp"
                     app:layout_constraintBottom_toTopOf="@+id/view"
@@ -237,7 +235,6 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="14dp"
                     android:fontFamily="@font/lexend_regular"
-                    android:text="+919818648222"
                     android:textColor="@color/groundHeading"
                     android:textSize="17dp"
                     app:layout_constraintBottom_toTopOf="@+id/view"
@@ -291,7 +288,6 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="14dp"
                     android:fontFamily="@font/lexend_regular"
-                    android:text="Noida, India"
                     android:textColor="@color/groundHeading"
                     android:textSize="17dp"
                     app:layout_constraintBottom_toTopOf="@+id/view"
@@ -339,5 +335,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/editProfile" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/profileAnimationView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginBottom="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/lottie" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

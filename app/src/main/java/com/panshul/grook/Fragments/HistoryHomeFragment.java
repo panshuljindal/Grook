@@ -52,10 +52,12 @@ public class HistoryHomeFragment extends Fragment {
     UserHistoryModel user;
     ImageView image;
     ArrayList<AllHistoryModel> list;
-    TextView name,address,sport,timing,closed,bookedBy,previousName,previousDate;
+    TextView name,address,sport,timing,closed,bookedBy,previousName,previousDate,noPremium;
     RecyclerView recyclerView;
+    ConstraintLayout cl1;
     ConstraintLayout cl,toGround;
     LottieAnimationView animation;
+    boolean isPremium;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +75,7 @@ public class HistoryHomeFragment extends Fragment {
         list = new ArrayList<>();
         //Log.i("json",json);
         findViewByID();
-
+        isPremium = pref1.getBoolean("isPremium",false);
         cl.setVisibility(View.INVISIBLE);
         animation.setVisibility(View.VISIBLE);
         Gson gson = new Gson();
@@ -143,10 +145,12 @@ public class HistoryHomeFragment extends Fragment {
         bookedBy = view.findViewById(R.id.hsBookedBy);
         recyclerView = view.findViewById(R.id.historyHomeRecyclerView);
         cl = view.findViewById(R.id.historyHomeCl);
+        cl1=view.findViewById(R.id.constraintLayout2);
         animation = view.findViewById(R.id.historyHomeAnimationView);
         toGround = view.findViewById(R.id.groundToActivity);
         previousName = view.findViewById(R.id.historyPreviousName);
         previousDate=view.findViewById(R.id.historyPreviousDate);
+        noPremium = view.findViewById(R.id.noPremium);
     }
     public void addData(){
         DatabaseReference myref = FirebaseDatabase.getInstance().getReference("History").child("Ground").child(user.getGid());
@@ -175,7 +179,15 @@ public class HistoryHomeFragment extends Fragment {
 
                 }
                 bookedBy.setText("Booked by "+String.valueOf(list.size()+1)+" Users");
-                adapter();
+                if(isPremium){
+                    adapter();
+                }else {
+                    cl.setVisibility(View.VISIBLE);
+                    cl1.setVisibility(View.GONE);
+                    animation.setVisibility(View.INVISIBLE);
+                    animation.pauseAnimation();
+                    noPremium.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

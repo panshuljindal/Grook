@@ -109,6 +109,9 @@ public class Login extends AppCompatActivity {
                     String city = snapshot.child(uid).child("city").getValue().toString();
                     editor.putString("city",city);
                     editor.apply();
+                    String isPremium = snapshot.child(uid).child("isPremium").getValue().toString();
+                    editor.putBoolean("isPremium",Boolean.valueOf(isPremium)).commit();
+                    editor.apply();
                 }
                 catch (Exception e){
 
